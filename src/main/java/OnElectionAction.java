@@ -23,7 +23,7 @@ public class OnElectionAction implements OnElectionCallback {
     private int node_count;
     private List<String> nodes;
     private WebServer webServer;
-    private static final String PASSWORD_FILE = "D:\\IDEA Projects\\Distributed Password Cracker\\src\\main\\resources\\passwords.txt";
+    private static final String PASSWORD_FILE = "./resources/passwords.txt";
 
     public OnElectionAction(ServiceRegistry workersServiceRegistry,
                             ServiceRegistry coordinatorsServiceRegistry,
