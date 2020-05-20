@@ -31,7 +31,7 @@ public class Application implements Watcher {
 
         application.run();
         application.close();
-        System.out.println("Exiting application due to disconnection from Zookeeper");
+        System.out.println("Exiting application due to disconnection from ZooKeeper");
     }
 
     public ZooKeeper connectToZookeeper() throws IOException {
