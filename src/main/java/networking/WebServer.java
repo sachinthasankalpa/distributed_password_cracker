@@ -9,10 +9,10 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
-public class WebServer {
+public class WebServer{
     private static final String STATUS_ENDPOINT = "/status";
 
-    private final int port;
+    public static int port;
     private HttpServer server;
     private final OnRequestCallback requestCallback;
 
@@ -22,12 +22,16 @@ public class WebServer {
     }
 
     public void startServer() {
-        try {
-            this.server = HttpServer.create(new InetSocketAddress(port), 0);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
+        do {
+            try {
+                this.server = HttpServer.create(new InetSocketAddress(port), 0);
+                break;
+            } catch (Exception e) {
+                System.out.println("Port already in use :" + port);
+                port++;
+                System.out.println("Trying a different port :" + port);
+            }
+        } while (true);
 
         HttpContext statusContext = server.createContext(STATUS_ENDPOINT);
         HttpContext taskContext = server.createContext(requestCallback.getEndpoint());

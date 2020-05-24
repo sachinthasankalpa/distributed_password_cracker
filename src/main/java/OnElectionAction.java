@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class OnElectionAction implements OnElectionCallback {
     private final ServiceRegistry workersServiceRegistry;
     private final ServiceRegistry coordinatorsServiceRegistry;
-    private final int port;
+    private int port;
     private int node_count;
     private List<String> nodes;
     private WebServer webServer;
@@ -45,6 +45,7 @@ public class OnElectionAction implements OnElectionCallback {
         GuessCoordinator guessCoordinator = new GuessCoordinator(workersServiceRegistry, new WebClient());
         webServer = new WebServer(port, guessCoordinator);
         webServer.startServer();
+        port = WebServer.port;
         Thread cordinationThread = new Thread(() -> {
             try {
                 Thread.sleep(30000);
@@ -53,9 +54,7 @@ public class OnElectionAction implements OnElectionCallback {
 
                 List<String> passwords = new ArrayList<>();
                 try (BufferedReader br = Files.newBufferedReader(Paths.get(PASSWORD_FILE))) {
-
                     passwords = br.lines().collect(Collectors.toList());
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -95,6 +94,7 @@ public class OnElectionAction implements OnElectionCallback {
         if (webServer == null) {
             webServer = new WebServer(port, guessWorker);
             webServer.startServer();
+            port = WebServer.port;
         }
 
         try {
