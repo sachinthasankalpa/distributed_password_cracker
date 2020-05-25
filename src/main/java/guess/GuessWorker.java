@@ -9,7 +9,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import java.util.Random;
 
 public class GuessWorker implements OnRequestCallback {
-    private static final String ENDPOINT = "/task";
+    private static final String ENDPOINT = "/range";
 
     public byte[] handleRequest(byte[] requestPayload) {
         Range range = (Range) SerializationUtils.deserialize(requestPayload);
